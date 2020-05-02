@@ -11,12 +11,14 @@ function buildNumbers() {
     numbers.insert(2, 2);
     numbers.insert(5, 5);
     numbers.insert(7, 7);
-    numbers.remove(3);
+    // numbers.remove(3);
+    // numbers.insert(3, 3);
+    // numbers.insert(3, 3);
 
     return numbers;
 }
 
-console.log(buildNumbers().right.right.left);
+// console.log(buildNumbers());
 
 function buildLetters() {
     let letters = new BinarySearchTree();
@@ -71,5 +73,29 @@ function height(tree, count = 0) {
     }
 }
 
-console.log(height(buildNumbers()));
-console.log(height(buildLetters()));
+// console.log(height(buildNumbers()));
+// console.log(height(buildLetters()));
+
+function isBST(tree) { 
+    function helper(tree, minRange, maxRange) {
+        if (tree.key == null) {
+            return true;
+        }
+        if (tree.key < minRange || tree.key > maxRange) {
+            return false;
+        }
+        if (helper(tree.left, minRange, tree.key - 1)) {
+            if (helper(tree.right, tree.key + 1, maxRange)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    if (helper(tree, tree.key - 1, tree.key + 1)) {
+        return true;
+    }
+    return false;
+}
+
+console.log(isBST(buildNumbers()));
