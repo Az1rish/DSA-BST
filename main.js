@@ -11,6 +11,15 @@ function buildNumbers() {
     numbers.insert(2, 2);
     numbers.insert(5, 5);
     numbers.insert(7, 7);
+    numbers.insert(21, 21);
+    numbers.insert(13, 13);
+    numbers.insert(43, 43);
+    numbers.insert(66, 66);
+    numbers.insert(997, 997);
+    numbers.insert(23, 23);
+    numbers.insert(58, 58);
+    numbers.insert(77, 77);
+    numbers.insert(68, 68);
     // numbers.remove(3);
     // numbers.insert(3, 3);
     // numbers.insert(3, 3);
@@ -77,25 +86,36 @@ function height(tree, count = 0) {
 // console.log(height(buildLetters()));
 
 function isBST(tree) { 
+    // console.log(tree);
     function helper(tree, minRange, maxRange) {
-        if (tree.key == null) {
+        if (tree == null) {
             return true;
         }
         if (tree.key < minRange || tree.key > maxRange) {
             return false;
         }
-        if (helper(tree.left, minRange, tree.key - 1)) {
-            if (helper(tree.right, tree.key + 1, maxRange)) {
-                return true;
-            }
-        }
-        return false;
+        return helper(tree.left, minRange, tree.key - 1) && helper(tree.right, tree.key + 1, maxRange);
     }
 
-    if (helper(tree, tree.key - 1, tree.key + 1)) {
-        return true;
+    if (helper(tree, Number.MIN_VALUE, Number.MAX_VALUE)) {
+        return true; 
     }
     return false;
 }
 
 console.log(isBST(buildNumbers()));
+
+function nthLargest(tree, n, count = 0) {
+    if (tree == null || count > n) {
+        return;
+    }
+    nthLargest(tree.right, n, count);
+    count++;
+    console.log(count);
+    if (count == n) {
+        return tree.key;
+    }
+    nthLargest(tree.left, n, count);
+}
+
+console.log(nthLargest(buildNumbers(), 3));
